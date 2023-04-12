@@ -1,6 +1,9 @@
 # Use the official Ubuntu image as the base
 FROM ubuntu:20.04
 
+# Set the environment variable to disable interactive prompts
+ENV DEBIAN_FRONTEND=noninteractive
+
 # Install necessary packages
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
