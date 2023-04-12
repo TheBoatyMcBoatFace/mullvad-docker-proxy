@@ -9,7 +9,7 @@ cp "/etc/wireguard/profiles/${PROFILE}" /etc/wireguard/wg0.conf
 sed -i "s|PrivateKey_PLACEHOLDER|${PRIVATE_KEY}|g" /etc/wireguard/wg0.conf
 
 # Set up the Wireguard interface
-WG_QUICK_RESOLVCONF=/sbin/resolvconf wg-quick up wg0
+WG_QUICK_RESOLVCONF=/sbin/openresolv wg-quick up wg0
 
 ln -sf /dev/stdout /var/log/squid/access.log && \
 ln -sf /var/log/squid/access.log /squid-logs/access.log

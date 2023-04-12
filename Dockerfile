@@ -14,9 +14,10 @@ RUN apt-get update && \
         iproute2 \
         jq \
         curl \
-        resolvconf \
+        openresolv \
         ca-certificates && \
     rm -rf /var/lib/apt/lists/*
+
 
 # Copy the entrypoint script and the Squid configuration
 COPY entrypoint.sh /entrypoint.sh
