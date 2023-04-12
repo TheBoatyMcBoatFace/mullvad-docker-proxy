@@ -15,6 +15,7 @@ RUN apt-get update && \
         jq \
         curl \
         ca-certificates && \
+        resolvconf && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy the entrypoint script and the Squid configuration
