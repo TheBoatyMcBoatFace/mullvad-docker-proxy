@@ -5,9 +5,8 @@ FROM ubuntu:20.04
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install necessary packages
-RUN apt-get update
-
-RUN apt-get install /-y /--no-install-recommends \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
         squid \
         wireguard \
         wireguard-tools \
@@ -15,10 +14,8 @@ RUN apt-get install /-y /--no-install-recommends \
         iproute2 \
         jq \
         curl \
-        ca-certificates \
-        resolvconf && \
-    rm /-rf /var/lib/apt/lists/*
-
+        ca-certificates && \
+    rm -rf /var/lib/apt/lists/*
 
 # Copy the entrypoint script and the Squid configuration
 COPY entrypoint.sh /entrypoint.sh
