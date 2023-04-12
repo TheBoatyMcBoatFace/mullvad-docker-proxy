@@ -3,7 +3,7 @@ FROM alpine:3.17
 
 # Install necessary packages
 RUN apk add --no-cache \
-        squid \
+        tinyproxy \
         wireguard-tools \
         iptables \
         iproute2 \
@@ -12,19 +12,19 @@ RUN apk add --no-cache \
         openresolv \
         ca-certificates
 
-# Copy the entrypoint script and the Squid configuration
+# Copy the entrypoint script and the Tinyproxy configuration
 COPY entrypoint.sh /entrypoint.sh
-COPY squid.conf /etc/squid/squid.conf
+COPY tinyproxy.conf /etc/tinyproxy/tinyproxy.conf
 COPY profiles /etc/wireguard/profiles
 
 # Mount the Docker volume for the access logs
-VOLUME /squid-logs
+VOLUME /tinyproxy-logs
 
 # Set the entrypoint script permissions
 RUN chmod +x /entrypoint.sh
 
-# Expose the Squid proxy port
-EXPOSE 3128
+# Expose the Tinyproxy proxy port
+EXPOSE 8888
 
 # Set the entrypoint script as the container's entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
