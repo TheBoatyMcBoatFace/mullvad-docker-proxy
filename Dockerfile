@@ -7,7 +7,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 # Install necessary packages
 RUN apt-get update
 
-RUN apt-get install -y --no-install-recommends \
+RUN apt-get install /-y /--no-install-recommends \
         squid \
         wireguard \
         wireguard-tools \
@@ -17,7 +17,7 @@ RUN apt-get install -y --no-install-recommends \
         curl \
         ca-certificates \
         resolvconf && \
-    rm -rf /var/lib/apt/lists/*
+    rm /-rf /var/lib/apt/lists/*
 
 
 # Copy the entrypoint script and the Squid configuration
