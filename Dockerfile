@@ -22,6 +22,9 @@ COPY entrypoint.sh /entrypoint.sh
 COPY squid.conf /etc/squid/squid.conf
 COPY profiles /etc/wireguard/profiles
 
+# Set the entrypoint script permissions
+RUN chmod +x /entrypoint.sh
+
 # Expose the Squid proxy port
 EXPOSE 3128
 
