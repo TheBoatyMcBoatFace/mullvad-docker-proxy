@@ -17,7 +17,7 @@ ip rule add not fwmark 51820 table 51820
 ip rule add table main suppress_prefixlength 0
 
 # Configure DNS using openresolv
-DNS_SERVERS=$(wg show wg0 allowed-ips | grep -oP '(?<=\(main\) )[0-9a-fA-F:.]*')
+DNS_SERVERS=$(wg show wg0 allowed-ips | awk -F'[()]' '{print $2}')
 for DNS_SERVER in $DNS_SERVERS; do
     echo "nameserver $DNS_SERVER" >> /etc/resolv.conf
 done
