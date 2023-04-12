@@ -9,7 +9,18 @@ cp "/etc/wireguard/profiles/${PROFILE}" /etc/wireguard/wg0.conf
 sed -i "s|PrivateKey_PLACEHOLDER|${PRIVATE_KEY}|g" /etc/wireguard/wg0.conf
 
 # Set up the Wireguard interface
-wg-quick up wg0
+ip link add wg0 type wireguard
+wg setconf wg0 /etc/wireguard/wg0.conf
+ip link set wg0 up
+ip route add default dev wg0 table 51820
+ip rule add not fwmark 51820 table 51820
+ip rule add table main suppress_prefixlength 0
+
+# Configure DNS using openresolv
+DNS_SERVERS=$(wg show wg0 allowed-ips | grep -oP '(?<=\(main\) )[0-9a-fA-F:.]*')
+for DNS_SERVER in $DNS_SERVERS; do
+    echo "nameserver $DNS_SERVER" >> /etc/resolv.conf
+done
 
 # Get the primary IP address of the Docker container
 PRIMARY_IP=$(ip -4 addr show scope global | grep inet | awk '{print $2}' | cut -d/ -f1 | head -n 1)
