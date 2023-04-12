@@ -11,5 +11,8 @@ sed -i "s|PrivateKey_PLACEHOLDER|${PRIVATE_KEY}|g" /etc/wireguard/wg0.conf
 # Set up the Wireguard interface
 wg-quick up wg0
 
+ln -sf /dev/stdout /var/log/squid/access.log && \
+ln -sf /var/log/squid/access.log /squid-logs/access.log
+
 # Start the Squid proxy
 exec squid -N -f /etc/squid/squid.conf
